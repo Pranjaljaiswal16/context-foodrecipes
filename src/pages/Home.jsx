@@ -1,10 +1,25 @@
-
-
+import { useState } from "react";
+import axios from "../utils/axis";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const getproduct = async () => {
+    try {
+      const { data } = await axios.get("/products");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-export default Home
+  useState(() => {
+    getproduct();
+  });
+
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  );
+};
+
+export default Home;

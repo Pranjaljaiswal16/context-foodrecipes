@@ -17,6 +17,7 @@ const CreateRecipe = () => {
     const copydata = [...data];
     copydata.push(recipe);
     setdata(copydata);
+    localStorage.setItem("recipes", JSON.stringify(copydata));
 
     toast.success("New recipe created!");
     reset();

@@ -13,24 +13,28 @@ const SingleRecipe = () => {
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      title: recipe.title,
-      chef: recipe.chef,
-      image: recipe.image,
+      title: recipe?.title,
+      chef: recipe?.chef,
+      image: recipe?.image,
     },
   });
 
-  const submitHandler = (recipe) => {
+  const UpdateHandler = (recipe) => {
     const index = data.findIndex((recipe) => params.id == recipe.id);
 
     const copydata = [...data];
     copydata[index] = { ...copydata[index], ...recipe };
     setdata(copydata);
+    localStorage.setItem("recipes", JSON.stringify(copydata));
+
     toast.success("Recipes Updated");
   };
 
   const deleteHandler = () => {
     const filterdata = data.filter((recipe) => recipe.id != params.id);
     setdata(filterdata);
+    localStorage.setItem("recipes", JSON.stringify(filterdata));
+
     toast.success("Recipe Deleted!");
     navigate("/recipes");
   };
@@ -44,7 +48,7 @@ const SingleRecipe = () => {
         <p>{recipe.desc}</p>
       </div>
 
-      <form onSubmit={handleSubmit(submitHandler)} className="w-1/2 p-2">
+      <form onSubmit={handleSubmit(UpdateHandler)} className="w-1/2 p-2">
         <input
           {...register("title")}
           type="text"
